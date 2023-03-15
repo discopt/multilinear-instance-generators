@@ -1,7 +1,7 @@
 import sys
 from collections import defaultdict
 
-def generateMonomialWisePip(N, R, outFileName, factor=1):
+def generate(N, R, outFilePrefix, factor=1):
   coefficients = defaultdict(lambda: 0)
   for i in range(1, N - R + 2):
     for d in range(1, R):
@@ -24,7 +24,7 @@ def generateMonomialWisePip(N, R, outFileName, factor=1):
   sys.stderr.write(f'Polynomial for N = {N} and R = {R} has {len(coefficients)} monomials.\n')
   sys.stderr.flush()
 
-  outFile = open(outFileName, 'w')
+  outFile = open(outFilePrefix, 'w')
   outFile.write('\\ Low auto-correlation binary sequence problem\n')
   outFile.write('\\ Determines the ground state for the Bernasconi model.\n')
   outFile.write(f'\\ Parameters: N = {N}, R = {R}\n')
@@ -52,7 +52,7 @@ def generateMonomialWisePip(N, R, outFileName, factor=1):
   outFile.write(' ' + ' '.join(f' x#{i}' for i in range(1,N+1)))
   outFile.write('\nend\n')
 
-def generateMonomialWiseLP(N, R, outFileName, factor=1):
+def generateMonomialWiseLP(N, R, outFilePrefix, factor=1):
   coefficients = defaultdict(lambda: 0)
   for i in range(1, N - R + 2):
     for d in range(1, R):
@@ -77,7 +77,7 @@ def generateMonomialWiseLP(N, R, outFileName, factor=1):
   
   sortedTerms = sorted(coefficients.keys(), key=lambda term: (len(term), term) )
 
-  outFile = open(outFileName, 'w')
+  outFile = open(outFilePrefix, 'w')
   outFile.write('\\ Low auto-correlation binary sequence problem\n')
   outFile.write('\\ Determines the ground state for the Bernasconi model.\n')
   outFile.write(f'\\ Parameters: N = {N}, R = {R}\n')
@@ -122,16 +122,10 @@ if __name__ == '__main__':
   try:
     N = int(sys.argv[1])
     R = int(sys.argv[2])
-    outFileName = sys.argv[3]
+    outFilePrefix = sys.argv[3]
   except:
-    print(f'Usage: {sys.argv[0]} N R OUTFILE')
-    print('OUTFILE must end either with .pip or with .lp')
+    print(f'Usage: {sys.argv[0]} N R OUTFILEPREFIX')
+    print('Creates OUTFILEPREFIX.lp')
     sys.exit(1)
 
-  if outFileName[-4:] == '.pip':
-    generateMonomialWisePip(N, R, outFileName)
-  elif outFileName[-3:] == '.lp':
-    generateMonomialWiseLP(N, R, outFileName)
-  else:
-    print(f'Unrecognized file extension in output file name <{outFileName}>.')
-    sys.exit(1)
+  generate(N, R, outFilePrefix)

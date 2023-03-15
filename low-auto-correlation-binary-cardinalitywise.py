@@ -1,7 +1,7 @@
 import sys
 from gurobipy import *
 
-def generateCardinalityWiseLP(N, R, outFileName, factor=1):
+def generate(N, R, outFilePrefix, factor=1):
   if R < N:
     raise Exception('Not implemented')
   model = Model()
@@ -42,21 +42,17 @@ def generateCardinalityWiseLP(N, R, outFileName, factor=1):
       model.addConstr( quicksum( z[i,d,k] for k in range(-R-d, R+d+1, 2) ) == 1 )
       model.addConstr( quicksum( k * z[i,d,k] for k in range(-R-d, R+d+1, 2) ) == quicksum( (2*y[j,j+d]-1) for j in range(i, i+R-d) ) )
   
-  model.write(outFileName)
+  model.write(outFilePrefix)
 
 if __name__ == '__main__':
   try:
     N = int(sys.argv[1])
     R = int(sys.argv[2])
-    outFileName = sys.argv[3]
+    outFilePrefix = sys.argv[3]
   except:
-    print(f'Usage: {sys.argv[0]} N R OUTFILE')
-    print('OUTFILE must end either with .lp')
+    print(f'Usage: {sys.argv[0]} N R OUTFILEPREFIX')
+    print('Creates OUTFILEPREFIX.lp')
     sys.exit(1)
 
-  if outFileName[-4:] == '.lp':
-    generateCardinalityWiseLP(N, R, outFileName)
-  else:
-    print(f'Unrecognized file extension in output file name <{outFileName}>.')
-    sys.exit(1)
+  generate(N, R, outFilePrefix)
 
