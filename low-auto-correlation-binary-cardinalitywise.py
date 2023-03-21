@@ -42,7 +42,7 @@ def generate(N, R, outFilePrefix, factor=1):
       model.addConstr( quicksum( z[i,d,k] for k in range(-R-d, R+d+1, 2) ) == 1 )
       model.addConstr( quicksum( k * z[i,d,k] for k in range(-R-d, R+d+1, 2) ) == quicksum( (2*y[j,j+d]-1) for j in range(i, i+R-d) ) )
   
-  model.write(outFilePrefix)
+  model.write(outFilePrefix + '.lp')
 
 if __name__ == '__main__':
   try:

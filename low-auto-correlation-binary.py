@@ -28,7 +28,7 @@ def generate(N, R, outFilePrefix, factor=1):
   outFile.write('\\ Low auto-correlation binary sequence problem\n')
   outFile.write('\\ Determines the ground state for the Bernasconi model.\n')
   outFile.write(f'\\ Parameters: N = {N}, R = {R}\n')
-  outFile.write('minimize\n  obj: objvar\nsubject to\n  objcons: ')
+  outFile.write('minimize\n  obj: energy\nsubject to\n  objcons: ')
   sortedTerms = sorted(coefficients.keys(), key=lambda term: (len(term), term) )
   count = 0
   for term in sortedTerms:
@@ -44,8 +44,8 @@ def generate(N, R, outFilePrefix, factor=1):
     count += 1
     if count % 16 == 0:
       outFile.write('\n')
-  outFile.write(f' - objvar <= {-coefficients[()]}\n')
-  outFile.write('bounds\n  objvar free\n')
+  outFile.write(f' - energy <= {-coefficients[()]}\n')
+  outFile.write('bounds\n  energy free\n')
   for i in range(1,N+1):
     outFile.write(f'  x#{i} <= 1\n')
   outFile.write('binary\n')

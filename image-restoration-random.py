@@ -138,6 +138,7 @@ def write(baseImage, blurredImage, base, perturbation, outFilePrefix):
     for c in range(numColumns-1):
       add(coefficients, 10, [(r,c,'-'),(r,c+1,'-'),(r+1,c,'-'),(r+1,c+1,'-')]) # 10*(1-x11)*(1-x12)*(1-x21)*(1-x22)
       add(coefficients, 10, [(r,c,'+'),(r,c+1,'+'),(r+1,c,'+'),(r+1,c+1,'+')])
+
       add(coefficients, 20, [(r,c,'-'),(r,c+1,'-'),(r+1,c,'-'),(r+1,c+1,'+')])
       add(coefficients, 20, [(r,c,'-'),(r,c+1,'-'),(r+1,c,'+'),(r+1,c+1,'-')])
       add(coefficients, 20, [(r,c,'-'),(r,c+1,'+'),(r+1,c,'-'),(r+1,c+1,'-')])
@@ -146,12 +147,14 @@ def write(baseImage, blurredImage, base, perturbation, outFilePrefix):
       add(coefficients, 20, [(r,c,'+'),(r,c+1,'+'),(r+1,c,'-'),(r+1,c+1,'+')])
       add(coefficients, 20, [(r,c,'+'),(r,c+1,'-'),(r+1,c,'+'),(r+1,c+1,'+')])
       add(coefficients, 20, [(r,c,'-'),(r,c+1,'+'),(r+1,c,'+'),(r+1,c+1,'+')])
+
       add(coefficients, 30, [(r,c,'+'),(r,c+1,'+'),(r+1,c,'-'),(r+1,c+1,'-')])
       add(coefficients, 30, [(r,c,'-'),(r,c+1,'-'),(r+1,c,'+'),(r+1,c+1,'+')])
       add(coefficients, 30, [(r,c,'+'),(r,c+1,'-'),(r+1,c,'+'),(r+1,c+1,'-')])
       add(coefficients, 30, [(r,c,'-'),(r,c+1,'+'),(r+1,c,'-'),(r+1,c+1,'+')])
+
       add(coefficients, 40, [(r,c,'+'),(r,c+1,'-'),(r+1,c,'-'),(r+1,c+1,'+')])
-      add(coefficients, 40, [(r,c,'-'),(r,c+1,'+'),(r+1,c,'+'),(r+1,c+1,'-')]) # 40*(1-x11)*x12*x12*(1-x22)
+      add(coefficients, 40, [(r,c,'-'),(r,c+1,'+'),(r+1,c,'+'),(r+1,c+1,'-')]) # 40*(1-x11)*x12*x21*(1-x22)
 
   # Compute objective value of base image.
   baseImageObj = 0.0
