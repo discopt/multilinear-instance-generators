@@ -13,7 +13,7 @@ if generateLABS:
   LABS_DIR='labs'
   if not os.path.exists(LABS_DIR):
     os.mkdir(LABS_DIR)
-  for N in range(15,51,5):
+  for N in range(10,51,5):
     for factor in [8/8, 7/8, 6/8, 5/8, 4/8, 3/8, 2/8, 1/8]:
       R = math.ceil(factor * N)
       syscall(f'python low-auto-correlation-binary.py {N} {R} {LABS_DIR}/low-auto-correlation-binary-sequences-{N:02}-{R:02}')
