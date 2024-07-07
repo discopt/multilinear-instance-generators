@@ -1,14 +1,15 @@
 import os
 import math
 
-generateLABS = True
+generateLABS = False
 generateIRR = False
+generateHDR = True
 
 if generateLABS:
   LABS_DIR='labs'
   if not os.path.exists(LABS_DIR):
     os.mkdir(LABS_DIR)
-  for N in range(15,61,5):
+  for N in range(15,51,5):
     for factor in [8/8, 7/8, 6/8, 5/8, 4/8, 3/8, 2/8, 1/8]:
       R = math.ceil(factor * N)
       os.system(f'python low-auto-correlation-binary.py {N} {R} {LABS_DIR}/low-auto-correlation-binary-sequences-{N:02}-{R:02}')
@@ -28,5 +29,16 @@ if generateIRR:
           repetitions = [1, 2]
           pertDesc = f'{pert[0]}{pert[1]}'
         for rep in repetitions:
-          os.system(f'python random-image-restoration.py {size[0]} {size[1]} {base} {pert[0]} {pert[1]} {IRR_DIR}/image-restoration-random-{base}-{pertDesc}-{size[0]}x{size[1]}-#{rep}')
+          os.system(f'python image-restoration-random.py {size[0]} {size[1]} {base} {pert[0]} {pert[1]} {IRR_DIR}/image-restoration-random-{base}-{pertDesc}-{size[0]}x{size[1]}-#{rep}')
+
+if generateHDR:
+  HDR_DIR='hdr'
+  if not os.path.exists(HDR_DIR):
+    os.mkdir(HDR_DIR)
+  repetitions = list(range(1,6))
+  for n in [50, 100, 200]:
+    for m in [5*n, 10*n, 20*n]:
+      for d in [2, 3, 4]:
+        for r in repetitions:
+          os.system(f'python high-degree-random.py {n} {m} {d} {HDR_DIR}/high-degree-random-{n}-{m}-{d}-#{r}')
  
